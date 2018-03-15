@@ -1,51 +1,10 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 
 class Table extends React.Component {
-    constructor() {
-        super();
-        this.state = {
-            evaluationType: ''
-        };
-        this.onChange = this.onChange.bind(this);
-    }
-
-    onChange(type) {
-        this.setState({
-            evaluationType: type
-        });
-    }
     render() {
-        const data = [{
-            name: 'Jitesh',
-            exp: 3,
-            cv: 'CV',
-            evLink: 'EV',
-            lOne: 'Pass'
-        }];
 
-        const columns = [{
-            name: 'Name',
-            accessor: 'name'
-        }, {
-            name: 'Yrs of Experience',
-            accessor: 'exp'
-        }, {
-            name: 'CV Link',
-            accessor: 'cv'
-        }, {
-            name: 'Evaluation Link',
-            accessor: 'evLink'
-        }, {
-            name: 'L1 Result',
-            accessor: 'lOne'
-        }, {
-            name: 'Evaluate',
-            cell: <Link to={`/form/${this.state.evaluationType}`} className="btn btn-primary">Evaluate</Link>
-        }];
-
-        const TableHeadComponent = columns.map((col, index) => {
-            return (<th scope="col" key={index}>{col.name}</th>)
+        const TableHeadComponent = this.props.columns.map((col, index) => {
+            return (<th scope="col" key={index}>{col.name} {col.sortable ? <span>Icon</span> : null}</th>)
         });
 
         const TableBodyColumn = (columns, obj) => {
@@ -54,8 +13,8 @@ class Table extends React.Component {
             });
         }
 
-        const TableBodyComponent = data.map((dataObj, i) => {
-            return (<tr key={i} >{TableBodyColumn(columns, dataObj)}</tr>)
+        const TableBodyComponent = this.props.data.map((dataObj, i) => {
+            return (<tr key={i} >{TableBodyColumn(this.props.columns, dataObj)}</tr>)
         });
         return (
             <div>
@@ -69,10 +28,6 @@ class Table extends React.Component {
                         {TableBodyComponent}
                     </tbody>
                 </table>
-                <form>
-                    <input type="radio" name="evaluationType" checked={this.state.evaluationType === 'L1'} onChange={() => this.onChange('L1')} /><label>L1 Evaluation</label>
-                    <input type="radio" name="evaluationType" checked={this.state.evaluationType === 'GK'} onChange={() => this.onChange('GK')} /><label>GK Evaluation</label>
-                </form>
             </div>
         )
     }

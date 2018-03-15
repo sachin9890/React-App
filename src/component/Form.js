@@ -4,7 +4,7 @@ class Form extends React.Component {
     render() {
         console.log('Form', this.props);
         return (
-            <p>Your {this.props.match.params.type} form will be here</p>
+            <p>Your {this.props.evaluationType} form will be here</p>
         )
     }
 }
