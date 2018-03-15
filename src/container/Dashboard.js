@@ -2,7 +2,7 @@ import React from 'react';
 
 // Component Imports
 import Table from '../component/Table';
-import { Modal, ModalHeader, ModalBody } from '../component/Modal/Modal';
+import { Modal, ModalHeader, ModalBody } from '../component/Modal';
 import Form from '../component/Form';
 
 class Dashboard extends React.Component {
@@ -10,8 +10,15 @@ class Dashboard extends React.Component {
         super();
         this.state = {
             showModal: false,
-            formData: null,
-            evaluationType: ''
+            evaluationType: '',
+            formData:[{
+                "id":"name",
+                "type": "text",
+                "placeholder": "Enter name",
+                "name": "name",
+                "title": "Name",
+                "isReadOnly":false
+              }]
         }
         this.closeModal = this.closeModal.bind(this);
         this.showModal = this.showModal.bind(this);
@@ -77,7 +84,7 @@ class Dashboard extends React.Component {
                         <h5 className="modal-title">Evaluation Form</h5>
                     </ModalHeader>
                     <ModalBody>
-                        <Form evaluationType={this.state.evaluationType}></Form>
+                        <Form data={this.state.formData}></Form>
                     </ModalBody>
                 </Modal>
                 <form>
