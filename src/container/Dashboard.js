@@ -43,31 +43,59 @@ class Dashboard extends React.Component {
 
     render() {
         const data = [{
-            name: 'Jitesh',
+            name: 'Navdeep',
             exp: 3,
-            cv: 'CV',
+            cvLink: 'CV',
+            evLink: 'EV',
+            lOne: 'Pass'
+        }, {
+            name: 'Jitesh',
+            exp: 2,
+            cvLink: 'CV',
+            evLink: 'EV',
+            lOne: 'Fail'
+        }, {
+            name: 'Tushar',
+            exp: 4,
+            cvLink: 'CV',
+            evLink: 'EV',
+            lOne: 'Pass'
+        }, {
+            name: 'Sachin',
+            exp: 5,
+            cvLink: 'CV',
             evLink: 'EV',
             lOne: 'Pass'
         }];
 
         const columns = [{
-            name: 'Name',
-            accessor: 'name'
+            header: 'Name',
+            accessor: 'name',
+            sortable: true
         }, {
-            name: 'Yrs of Experience',
-            accessor: 'exp'
+            header: 'Yrs of Experience',
+            accessor: 'exp',
+            sortable: true
         }, {
-            name: 'CV Link',
-            accessor: 'cv'
+            header: 'CV Link',
+            cell: (rowData) => {
+                return <a href="#" target="_blank">{`CV_${rowData.name}`}</a>
+            }
         }, {
-            name: 'Evaluation Link',
-            accessor: 'evLink'
+            header: 'Evaluation Link',
+            cell: (rowData) => {
+                return <a href="#" target="_blank">{`EV_${rowData.name}`}</a>
+            }
         }, {
-            name: 'L1 Result',
-            accessor: 'lOne'
+            header: 'L1 Result',
+            cell: (rowData) => {
+                return <span className={`badge ${rowData.lOne === 'Pass' ? 'badge-success' : 'badge-danger'}`}>{rowData.lOne}</span>
+            }
         }, {
-            name: 'Evaluate',
-            cell: <button className="btn btn-primary" onClick={this.showModal}>Evaluate</button>
+            header: 'Evaluate',
+            cell: (rowData) => {
+                return <button className="btn btn-primary" onClick={this.showModal}>Evaluate</button>
+            }
         }];
         return (
             <div>
