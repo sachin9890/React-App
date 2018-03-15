@@ -1,23 +1,37 @@
 import React, { Component } from 'react';
 
 class Form extends Component {
+    constructor() {
+        super();
+
+        this.state = {};
+    }
+
+    onChange(e) {
+        var state = {};
+        var targetName = e.target.name;
+        state[targetName] = e.target.value;
+        this.setState(state);
+    }
 
     textBox(ele) {
         return (
             <div className="form-group row">
-                <label for={ele.id} className="col-sm-2 col-form-label">{ele.title}</label>
+                <label htmlFor={ele.id} className="col-sm-2 col-form-label">{ele.title}</label>
                 <div className="col-sm-10">
-                    <input type={ele.type} className="form-control" id={ele.id} placeholder={ele.placeholder} disabled={ele.isReadOnly} />
+                    <input type={ele.type} name={ele.name} className="form-control" id={ele.id} placeholder={ele.placeholder} disabled={ele.isReadOnly} onChange={this.onChange.bind(this)} />
                 </div>
             </div>
         )
     }
 
+
+
     textArea(ele) {
         return (
             <div className="form-group row">
-                <label for={ele.id} className="col-md-2 col-form-label">{ele.title}</label>
-                <textarea className="form-control col-md-8" id={ele.id} rows="3" disabled={ele.isReadOnly}></textarea>
+                <label htmlFor={ele.id} className="col-md-2 col-form-label">{ele.title}</label>
+                <textarea name={ele.name} className="form-control col-md-8" id={ele.id} rows="3" disabled={ele.isReadOnly} onChange={this.onChange.bind(this)}></textarea>
             </div>
         )
     }
@@ -38,7 +52,7 @@ class Form extends Component {
             return (
                 <div className="form-check">
                     <input className="form-check-input" type={option.type} name={option.groupName} id={option.id} />
-                    <label className="form-check-label" for={option.id}>
+                    <label className="form-check-label" htmlFor={option.id}>
                         {option.title}
                     </label>
                 </div>
@@ -50,8 +64,8 @@ class Form extends Component {
     select(ele) {
         return (
             <div className="form-group row">
-                <label for={ele.id} className="col-sm-2 col-form-label">{ele.title}</label>
-                <select className="col-md-4 form-control" id={ele.id} disabled={ele.isReadOnly}>
+                <label htmlFor={ele.id} className="col-sm-2 col-form-label">{ele.title}</label>
+                <select name={ele.name} className="col-md-4 form-control" id={ele.id} disabled={ele.isReadOnly} onChange={this.onChange.bind(this)}>
                     {this.selectOptions(ele.options)}
                 </select>
             </div>
@@ -59,8 +73,8 @@ class Form extends Component {
     }
 
     selectOptions(opts) {
-        return opts.map((opt) => {
-            return <option selected={opt.selected}>{opt.label}</option>
+        return opts.map((opt, index) => {
+            return <option key={index} value={opt.label}>{opt.label}</option>
         });
     }
 
@@ -68,7 +82,8 @@ class Form extends Component {
         return (
             <div className="form-group row">
                 <div className="col-md-12">
-                    <button type={ele.type} className="btn btn-primary float-right" disabled={ele.isReadOnly}>{ele.title}</button>
+                    <button type={ele.type} className="btn btn-primary float-right"
+                        disabled={ele.isReadOnly} onClick={() => this.props.onSubmitForm(this.state)}>{ele.title}</button>
                 </div>
             </div>
         )
@@ -92,7 +107,7 @@ class Form extends Component {
 
     render() {
         return (
-            <form className="container">{this.generateElement(this.props.data)}</form>
+            <form className="container" onSubmit={(e) => e.preventDefault()}>{this.generateElement(this.props.data)}</form>
         )
     }
 }

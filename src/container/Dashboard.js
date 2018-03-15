@@ -18,6 +18,45 @@ class Dashboard extends React.Component {
                 "name": "name",
                 "title": "Name",
                 "isReadOnly":false
+              },
+              {
+                "id":"hr",
+                "type": "text",
+                "placeholder": "Enter HR",
+                "name": "hr",
+                "title": "HR"
+              },
+              {
+                "type": "number",
+                "placeholder": "Enter Testscore",
+                "name": "testscore",
+                "title": "Testscore"
+              },
+              { 
+                "id":"eval",
+                "type": "select",
+                "title": "Evaluate",
+                "name": "evaluate",
+                "options": [{ "label": "Selected" }, { "label": "Rejected", "selected": true }]
+              },
+              { 
+                "id":"snr",
+                "type": "select",
+                "title": "Seniority",
+                "name": "seniority",
+                "options": [{ "label": "Jr" }, { "label": "S. Sr"},{ "label": "Sr."},{ "label": "SD"}]
+              },
+              {
+                "type": "textarea",
+                "placeholder": "Write something here...",
+                "name": "feedback",
+                "title": "Feedback"
+              },
+              {
+                "type": "submit",
+                "placeholder": "enter name",
+                "name": "firstName",
+                "title": "submit"
               }]
         }
         this.closeModal = this.closeModal.bind(this);
@@ -38,8 +77,8 @@ class Dashboard extends React.Component {
         });
     }
 
-    formSubmitAction() {
-        console.log('form submitted', this.state.formData);
+    formSubmitAction(name) {
+        console.log('form submitted', name);
     }
 
     onChange(type) {
@@ -112,7 +151,7 @@ class Dashboard extends React.Component {
                         <h5 className="modal-title">Evaluation Form</h5>
                     </ModalHeader>
                     <ModalBody>
-                        <Form data={this.state.formData}></Form>
+                        <Form data={this.state.formData} onSubmitForm={this.formSubmitAction.bind(this)}></Form>
                     </ModalBody>
                 </Modal>
                 <form>
