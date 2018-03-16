@@ -6,9 +6,12 @@ export class Modal extends React.Component {
             display: "block",
             backgroundColor: "rgba(0, 0, 0, .5)"
         };
+        const modalWidth = {
+            maxWidth:'700px'
+        }
         return (
             this.props.show ? (<div className="modal" style={modalVisible} tabIndex="-1" role="dialog">
-                <div className="modal-dialog" role="document">
+                <div className="modal-dialog" role="document" style={modalWidth}>
                     <div className="modal-content">
                         {this.props.children}
                     </div>

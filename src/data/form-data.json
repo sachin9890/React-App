@@ -7,6 +7,24 @@
     "isReadOnly":false
   },
   {
+    "id":"linkID",
+    "type": "link",
+    "name": "resume",
+    "title": "Resume",
+    "target":"_blank",
+    "address":"http://google.com",
+    "linkTitle":"click here"
+  },
+  {
+    "id":"evaluationID",
+    "type": "link",
+    "name": "evaluation",
+    "title": "Evaluation sheet",
+    "target":"_blank",
+    "address":"http://facebook.com",
+    "linkTitle":"click here"
+  },
+  {
     "id":"hr",
     "type": "text",
     "placeholder": "Enter HR",
@@ -17,7 +35,8 @@
     "type": "number",
     "placeholder": "Enter Testscore",
     "name": "testscore",
-    "title": "Testscore"
+    "title": "Testscore",
+    "id": "testscoreId"
   },
   { 
     "id":"eval",
@@ -34,6 +53,7 @@
     "options": [{ "label": "Jr" }, { "label": "S. Sr"},{ "label": "Sr."},{ "label": "SD"}]
   },
   {
+    "id":"feedbackId",
     "type": "textarea",
     "placeholder": "Write something here...",
     "name": "feedback",

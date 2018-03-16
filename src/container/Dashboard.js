@@ -39,6 +39,10 @@ class Dashboard extends React.Component {
         console.log('form submitted', name);
     }
 
+    transformData(data){
+        console.log(data);
+    }
+
     onChange(type) {
         this.setState({
             evaluationType: type
@@ -59,12 +63,12 @@ class Dashboard extends React.Component {
         }, {
             header: 'CV Link',
             cell: (rowData) => {
-                return <a href="#" target="_blank">{`CV_${rowData.name}`}</a>
+                return <a href={rowData.cvLink} target="_blank">{`CV_${rowData.name}`}</a>
             }
         }, {
             header: 'Evaluation Link',
             cell: (rowData) => {
-                return <a href="#" target="_blank">{`EV_${rowData.name}`}</a>
+                return <a href={rowData.evLink} target="_blank">{`EV_${rowData.name}`}</a>
             }
         }, {
             header: 'L1 Result',
@@ -74,6 +78,7 @@ class Dashboard extends React.Component {
         }, {
             header: 'Evaluate',
             cell: (rowData) => {
+                this.transformData(rowData);
                 return <button className="btn btn-primary" onClick={this.showModal}>Evaluate</button>
             }
         }];
@@ -85,7 +90,7 @@ class Dashboard extends React.Component {
                         <h5 className="modal-title">Evaluation Form</h5>
                     </ModalHeader>
                     <ModalBody>
-                        <Form data={this.state.formData} onSubmitForm={this.formSubmitAction.bind(this)}></Form>
+                        <Form data={this.state.formData} onSubmitForm={this.formSubmitAction.bind(this)} onCancelForm={this.closeModal}></Form>
                     </ModalBody>
                 </Modal>
                 <form>

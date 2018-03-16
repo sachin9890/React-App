@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
+import { Label, Input, TextArea, Select } from '../FormElements';
 
 class Form extends Component {
     constructor() {
         super();
-
         this.state = {};
     }
 
@@ -14,19 +14,14 @@ class Form extends Component {
         this.setState(state);
     }
 
-    textBox(ele) {
+    textBox(ele, i) {
         return (
-            <div className="form-group row">
-                <label
-                    htmlFor={ele.id}
-                    className="col-sm-2 col-form-label">
-                    {ele.title}
-                </label>
+            <div key={i} className="form-group row">
+                {this.addLabel(ele)}
                 <div className="col-sm-10">
-                    <input
+                    <Input
                         type={ele.type}
                         name={ele.name}
-                        className="form-control"
                         id={ele.id}
                         placeholder={ele.placeholder}
                         disabled={ele.isReadOnly}
@@ -38,31 +33,25 @@ class Form extends Component {
 
 
 
-    textArea(ele) {
+    textArea(ele, i) {
         return (
-            <div className="form-group row">
-                <label
-                    htmlFor={ele.id}
-                    className="col-md-2 col-form-label">
-                    {ele.title}
-                </label>
+            <div key={i} className="form-group row">
+                {this.addLabel(ele)}
                 <div className="col-sm-10">
-                    <textarea
+                    <TextArea
                         name={ele.name}
-                        className="form-control col-md-8"
                         id={ele.id}
-                        rows="3"
                         disabled={ele.isReadOnly}
                         onChange={this.onChange.bind(this)}>
-                    </textarea>
+                    </TextArea>
                 </div>
             </div>
         )
     }
 
-    checkBox(ele) {
+    checkBox(ele, i) {
         return (
-            <div className="form-group row">
+            <div key={i} className="form-group row">
                 <div className="col-sm-2">{ele.title}</div>
                 <div className="col-sm-10">
                     {this.checkBoxOptions(ele.options)}
@@ -72,86 +61,91 @@ class Form extends Component {
     }
 
     checkBoxOptions(options) {
-        return options.map((option) => {
+        return options.map((option, oindex) => {
             return (
-                <div className="form-check">
+                <div key={oindex} className="form-check">
                     <input
                         className="form-check-input"
                         type={option.type}
                         name={option.groupName}
                         id={option.id} />
-                    <label
-                        className="form-check-label"
-                        htmlFor={option.id}>
-                        {option.title}
-                    </label>
+                    {this.addLabel(option)}
                 </div>
             )
         });
     }
 
-    select(ele) {
+    select(ele, i) {
         return (
-            <div className="form-group row">
-                <label
-                    htmlFor={ele.id}
-                    className="col-sm-2 col-form-label">
-                    {ele.title}
-                </label>
+            <div key={i} className="form-group row">
+                {this.addLabel(ele)}
                 <div className="col-sm-10">
-                    <select
+                    <Select
                         name={ele.name}
-                        className="col-md-4 form-control"
                         id={ele.id} disabled={ele.isReadOnly}
-                        onChange={this.onChange.bind(this)}>
-                        {this.selectOptions(ele.options)}
-                    </select>
+                        onChange={this.onChange.bind(this)} options={ele.options}>
+                    </Select>
                 </div>
             </div>
         )
     }
 
-    selectOptions(opts) {
-        return opts.map((opt, index) => {
-            return (
-                <option
-                    key={index}
-                    value={opt.label}>
-                    {opt.label}
-                </option>
-            )
-        });
-    }
-
-    submitBtn(ele) {
+    submitBtn() {
         return (
             <div className="form-group row">
                 <div className="col-md-12">
                     <button
-                        type={ele.type}
+                        className="btn btn-secondary float-left"
+                        onClick={this.props.onCancelForm}>
+                        {'Cancel'}
+                    </button>
+                    <button
+                        type="submit"
                         className="btn btn-primary float-right"
-                        disabled={ele.isReadOnly}
                         onClick={() => this.props.onSubmitForm(this.state)}>
-                        {ele.title}
+                        {'Submit'}
                     </button>
                 </div>
             </div>
         )
     }
 
+    addLink(ele, i) {
+        return (
+            <div key={i} className="form-group row">
+                {this.addLabel(ele)}
+                <div className="col-sm-10" style={{ paddingTop: '7px' }}>
+                    <a href={ele.address} target={ele.target}>{ele.linkTitle}</a>
+                </div>
+            </div>
+        )
+    }
+
+    addLabel(ele) {
+        return (
+            <Label
+                id={ele.id}
+                classes={ele.classes}
+                title={ele.title}>
+            </Label>
+        )
+    }
+
     generateElement(data) {
-        return data.map((ele) => {
+        return data.map((ele, eindex) => {
+            let res = null;
             if (ele.type === 'text' || ele.type === 'email' || ele.type === 'password' || ele.type === 'number') {
-                return this.textBox(ele);
+                res = this.textBox(ele, eindex);
             } else if (ele.type === 'textarea') {
-                return this.textArea(ele);
+                res = this.textArea(ele, eindex);
             } else if (ele.type === 'checkbox' || ele.type === 'radio') {
-                return this.checkBox(ele);
-            } else if (ele.type === 'submit') {
-                return this.submitBtn(ele);
+                res = this.checkBox(ele, eindex);
             } else if (ele.type === 'select') {
-                return this.select(ele);
+                res = this.select(ele, eindex);
+            } else if (ele.type === 'link') {
+                res = this.addLink(ele, eindex);
             }
+            return res;
         });
     }
 
@@ -161,6 +155,7 @@ class Form extends Component {
                 className="container"
                 onSubmit={(e) => e.preventDefault()}>
                 {this.generateElement(this.props.data)}
+                {this.submitBtn()}
             </form>
         )
     }
