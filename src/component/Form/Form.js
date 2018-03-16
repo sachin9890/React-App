@@ -46,14 +46,16 @@ class Form extends Component {
                     className="col-md-2 col-form-label">
                     {ele.title}
                 </label>
-                <textarea
-                    name={ele.name}
-                    className="form-control col-md-8"
-                    id={ele.id}
-                    rows="3"
-                    disabled={ele.isReadOnly}
-                    onChange={this.onChange.bind(this)}>
-                </textarea>
+                <div className="col-sm-10">
+                    <textarea
+                        name={ele.name}
+                        className="form-control col-md-8"
+                        id={ele.id}
+                        rows="3"
+                        disabled={ele.isReadOnly}
+                        onChange={this.onChange.bind(this)}>
+                    </textarea>
+                </div>
             </div>
         )
     }
@@ -96,13 +98,15 @@ class Form extends Component {
                     className="col-sm-2 col-form-label">
                     {ele.title}
                 </label>
-                <select
-                    name={ele.name}
-                    className="col-md-4 form-control"
-                    id={ele.id} disabled={ele.isReadOnly}
-                    onChange={this.onChange.bind(this)}>
-                    {this.selectOptions(ele.options)}
-                </select>
+                <div className="col-sm-10">
+                    <select
+                        name={ele.name}
+                        className="col-md-4 form-control"
+                        id={ele.id} disabled={ele.isReadOnly}
+                        onChange={this.onChange.bind(this)}>
+                        {this.selectOptions(ele.options)}
+                    </select>
+                </div>
             </div>
         )
     }

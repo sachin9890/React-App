@@ -5,59 +5,17 @@ import Table from '../component/Table';
 import { Modal, ModalHeader, ModalBody } from '../component/Modal';
 import Form from '../component/Form';
 
+// JSON Imports
+import formData from '../data/form-data.json';
+import userData from '../data/table-data.json';
+
 class Dashboard extends React.Component {
     constructor() {
         super();
         this.state = {
             showModal: false,
             evaluationType: '',
-            formData:[{
-                "id":"name",
-                "type": "text",
-                "placeholder": "Enter name",
-                "name": "name",
-                "title": "Name",
-                "isReadOnly":false
-              },
-              {
-                "id":"hr",
-                "type": "text",
-                "placeholder": "Enter HR",
-                "name": "hr",
-                "title": "HR"
-              },
-              {
-                "type": "number",
-                "placeholder": "Enter Testscore",
-                "name": "testscore",
-                "title": "Testscore"
-              },
-              { 
-                "id":"eval",
-                "type": "select",
-                "title": "Evaluate",
-                "name": "evaluate",
-                "options": [{ "label": "Selected" }, { "label": "Rejected", "selected": true }]
-              },
-              { 
-                "id":"snr",
-                "type": "select",
-                "title": "Seniority",
-                "name": "seniority",
-                "options": [{ "label": "Jr" }, { "label": "S. Sr"},{ "label": "Sr."},{ "label": "SD"}]
-              },
-              {
-                "type": "textarea",
-                "placeholder": "Write something here...",
-                "name": "feedback",
-                "title": "Feedback"
-              },
-              {
-                "type": "submit",
-                "placeholder": "enter name",
-                "name": "firstName",
-                "title": "submit"
-              }]
+            formData: formData
         }
         this.closeModal = this.closeModal.bind(this);
         this.showModal = this.showModal.bind(this);
@@ -88,31 +46,7 @@ class Dashboard extends React.Component {
     }
 
     render() {
-        const data = [{
-            name: 'Navdeep',
-            exp: 3,
-            cvLink: 'CV',
-            evLink: 'EV',
-            lOne: 'Pass'
-        }, {
-            name: 'Jitesh',
-            exp: 2,
-            cvLink: 'CV',
-            evLink: 'EV',
-            lOne: 'Fail'
-        }, {
-            name: 'Tushar',
-            exp: 4,
-            cvLink: 'CV',
-            evLink: 'EV',
-            lOne: 'Pass'
-        }, {
-            name: 'Sachin',
-            exp: 5,
-            cvLink: 'CV',
-            evLink: 'EV',
-            lOne: 'Pass'
-        }];
+        const data = userData.data;
 
         const columns = [{
             header: 'Name',

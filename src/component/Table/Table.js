@@ -66,7 +66,6 @@ class Table extends React.Component {
         });
         return (
             <div>
-                {this.state.sortedColumn ? this.state.sortedColumn.order + ' ' + this.state.sortedColumn.header : 'null'}
                 <table className="table">
                     <thead>
                         <tr>
