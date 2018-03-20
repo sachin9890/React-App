@@ -85,18 +85,14 @@ class Dashboard extends React.Component {
         return (
             <div>
                 <Table columns={columns} data={data} ></Table>
-                <Modal show={this.state.showModal} onSuccess={this.formSubmitAction} >
+                <Modal show={this.state.showModal} >
                     <ModalHeader toggle={this.closeModal}>
                         <h5 className="modal-title">Evaluation Form</h5>
                     </ModalHeader>
                     <ModalBody>
-                        <Form data={this.state.formData} onSubmitForm={this.formSubmitAction.bind(this)} onCancelForm={this.closeModal}></Form>
+                        <Form data={this.state.formData} onSubmitForm={this.formSubmitAction} onCancelForm={this.closeModal}></Form>
                     </ModalBody>
                 </Modal>
-                <form>
-                    <input type="radio" name="evaluationType" checked={this.state.evaluationType === 'L1'} onChange={() => this.onChange('L1')} /><label>L1 Evaluation</label>
-                    <input type="radio" name="evaluationType" checked={this.state.evaluationType === 'GK'} onChange={() => this.onChange('GK')} /><label>GK Evaluation</label>
-                </form>
             </div>
         )
     }

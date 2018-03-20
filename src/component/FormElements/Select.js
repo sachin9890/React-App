@@ -36,7 +36,8 @@ Select.propTypes = {
 }
 
 Select.defaultProps = {
-    classes: "form-control"
+    classes: "form-control",
+    required: false
 };
 
 export default Select;

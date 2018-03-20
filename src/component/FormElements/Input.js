@@ -12,22 +12,24 @@ class Input extends Component {
                 id={this.props.id}
                 placeholder={this.props.placeholder}
                 disabled={this.props.disabled}
-                onChange={this.props.onChange} />
+                onChange={this.props.onChange}
+                required={this.props.required} />
         )
     }
 }
 
 Input.propTypes = {
-    name:PropTypes.string.isRequired,
-    type:PropTypes.string.isRequired,
-    id:PropTypes.string.isRequired,
-    onChange:PropTypes.func.isRequired
+    name: PropTypes.string.isRequired,
+    type: PropTypes.string.isRequired,
+    id: PropTypes.string.isRequired,
+    onChange: PropTypes.func.isRequired
 }
 
 Input.defaultProps = {
-    classes:"form-control",
-    placeholder:"",
-    disabled:false            
+    classes: "form-control",
+    placeholder: "",
+    disabled: false,
+    required: false
 };
 
 export default Input;

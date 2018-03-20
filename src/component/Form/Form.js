@@ -25,6 +25,7 @@ class Form extends Component {
                         id={ele.id}
                         placeholder={ele.placeholder}
                         disabled={ele.isReadOnly}
+                        required={ele.required}
                         onChange={this.onChange.bind(this)} />
                 </div>
             </div>
@@ -83,6 +84,7 @@ class Form extends Component {
                     <Select
                         name={ele.name}
                         id={ele.id} disabled={ele.isReadOnly}
+                        required={ele.required}
                         onChange={this.onChange.bind(this)} options={ele.options}>
                     </Select>
                 </div>
@@ -134,16 +136,23 @@ class Form extends Component {
     generateElement(data) {
         return data.map((ele, eindex) => {
             let res = null;
-            if (ele.type === 'text' || ele.type === 'email' || ele.type === 'password' || ele.type === 'number') {
-                res = this.textBox(ele, eindex);
-            } else if (ele.type === 'textarea') {
-                res = this.textArea(ele, eindex);
-            } else if (ele.type === 'checkbox' || ele.type === 'radio') {
-                res = this.checkBox(ele, eindex);
-            } else if (ele.type === 'select') {
-                res = this.select(ele, eindex);
-            } else if (ele.type === 'link') {
-                res = this.addLink(ele, eindex);
+            switch (ele.type) {
+                case 'text':
+                case 'email':
+                case 'password':
+                case 'number': res = this.textBox(ele, eindex);
+                    break;
+                case 'textarea': res = this.textArea(ele, eindex);
+                    break;
+                case 'checkbox':
+                case 'radio': res = this.checkBox(ele, eindex);
+                    break;
+                case 'select': res = this.select(ele, eindex);
+                    break;
+                case 'link': res = this.addLink(ele, eindex);
+                    break;
+                default: break;
+
             }
             return res;
         });

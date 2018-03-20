@@ -1,59 +1,86 @@
-[{
-    "id":"name",
+[
+  {
+    "id": "name",
     "type": "text",
     "placeholder": "Enter name",
     "name": "name",
     "title": "Name",
-    "isReadOnly":false
+    "isReadOnly": false,
+    "required": true
   },
   {
-    "id":"linkID",
+    "id": "linkID",
     "type": "link",
     "name": "resume",
     "title": "Resume",
-    "target":"_blank",
-    "address":"http://google.com",
-    "linkTitle":"click here"
+    "target": "_blank",
+    "address": "http://google.com",
+    "linkTitle": "click here"
   },
   {
-    "id":"evaluationID",
+    "id": "evaluationID",
     "type": "link",
     "name": "evaluation",
     "title": "Evaluation sheet",
-    "target":"_blank",
-    "address":"http://facebook.com",
-    "linkTitle":"click here"
+    "target": "_blank",
+    "address": "http://facebook.com",
+    "linkTitle": "click here"
   },
   {
-    "id":"hr",
+    "id": "hr",
     "type": "text",
     "placeholder": "Enter HR",
     "name": "hr",
-    "title": "HR"
+    "title": "HR",
+    "required": true
   },
   {
     "type": "number",
     "placeholder": "Enter Testscore",
     "name": "testscore",
     "title": "Testscore",
-    "id": "testscoreId"
+    "id": "testscoreId",
+    "required": true
   },
-  { 
-    "id":"eval",
+  {
+    "id": "eval",
     "type": "select",
     "title": "Evaluate",
     "name": "evaluate",
-    "options": [{ "label": "Selected" }, { "label": "Rejected", "selected": true }]
+    "required": true,
+    "options": [
+      {
+        "label": "Selected"
+      },
+      {
+        "label": "Rejected",
+        "selected": true
+      }
+    ]
   },
-  { 
-    "id":"snr",
+  {
+    "id": "snr",
     "type": "select",
     "title": "Seniority",
     "name": "seniority",
-    "options": [{ "label": "Jr" }, { "label": "S. Sr"},{ "label": "Sr."},{ "label": "SD"}]
+    "required": true,
+    "options": [
+      {
+        "label": "Jr"
+      },
+      {
+        "label": "S. Sr"
+      },
+      {
+        "label": "Sr."
+      },
+      {
+        "label": "SD"
+      }
+    ]
   },
   {
-    "id":"feedbackId",
+    "id": "feedbackId",
     "type": "textarea",
     "placeholder": "Write something here...",
     "name": "feedback",
@@ -64,4 +91,5 @@
     "placeholder": "enter name",
     "name": "firstName",
     "title": "submit"
-  }]
+  }
+]

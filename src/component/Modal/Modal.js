@@ -36,8 +36,12 @@ export class ModalHeader extends React.Component {
 
 export class ModalBody extends React.Component {
     render() {
+        const scroll = {
+            height: "80vh",
+            overflow: "auto"
+        };
         return (
-            <div className="modal-body">
+            <div className="modal-body" style={scroll}>
                 {this.props.children}
             </div>
         )
