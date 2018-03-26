@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Label, Input, TextArea, Select } from '../FormElements';
+import Button from '../Button';
 
 class Form extends Component {
     constructor() {
@@ -96,17 +97,8 @@ class Form extends Component {
         return (
             <div className="form-group row">
                 <div className="col-md-12">
-                    <button
-                        className="btn btn-secondary float-left"
-                        onClick={this.props.onCancelForm}>
-                        {'Cancel'}
-                    </button>
-                    <button
-                        type="submit"
-                        className="btn btn-primary float-right"
-                        onClick={() => this.props.onSubmitForm(this.state)}>
-                        {'Submit'}
-                    </button>
+                    <Button label="Cancel" onClickAction={this.props.onCancelForm} customClasses="btn btn-secondary float-left"/>
+                    <Button label="Submit" onClickAction={() => this.props.onSubmitForm(this.state)} customClasses="btn btn-primary float-right"/>
                 </div>
             </div>
         )
@@ -127,7 +119,7 @@ class Form extends Component {
         return (
             <Label
                 id={ele.id}
-                classes={ele.classes}
+                customClasses={ele.classes}
                 title={ele.title}>
             </Label>
         )

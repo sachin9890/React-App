@@ -7,7 +7,7 @@ class TextArea extends Component {
         return (
             <textarea
                 name={this.props.name}
-                className={this.props.classes}
+                className={this.props.customClasses}
                 id={this.props.id}
                 rows={this.props.rows}
                 disabled={this.props.isReadOnly}
@@ -18,13 +18,17 @@ class TextArea extends Component {
 }
 
 TextArea.propTypes = {
+    customClasses: PropTypes.string,
+    placeholder: PropTypes.string,
+    disabled: PropTypes.bool,
+    rows: PropTypes.string,
     name: PropTypes.string.isRequired,
     id: PropTypes.string.isRequired,
     onChange:PropTypes.func.isRequired
 }
 
 TextArea.defaultProps = {
-    classes: "form-control",
+    customClasses: "form-control",
     placeholder: "",
     disabled: false,
     rows: "3"

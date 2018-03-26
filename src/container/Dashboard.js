@@ -4,6 +4,7 @@ import React from 'react';
 import Table from '../component/Table';
 import { Modal, ModalHeader, ModalBody } from '../component/Modal';
 import Form from '../component/Form';
+import Button from '../component/Button';
 
 // JSON Imports
 import formData from '../data/form-data.json';
@@ -16,43 +17,11 @@ class Dashboard extends React.Component {
             showModal: false,
             evaluationType: '',
             formData: formData
-        }
-        this.closeModal = this.closeModal.bind(this);
-        this.showModal = this.showModal.bind(this);
-        this.formSubmitAction = this.formSubmitAction.bind(this);
-        this.onChange = this.onChange.bind(this);
-    }
+        };
 
-    closeModal() {
-        this.setState({
-            showModal: false
-        });
-    }
+        this.data = userData.data; // Temporary data
 
-    showModal() {
-        this.setState({
-            showModal: true
-        });
-    }
-
-    formSubmitAction(name) {
-        console.log('form submitted', name);
-    }
-
-    transformData(data){
-        console.log(data);
-    }
-
-    onChange(type) {
-        this.setState({
-            evaluationType: type
-        });
-    }
-
-    render() {
-        const data = userData.data;
-
-        const columns = [{
+        this.colHeaders = [{
             header: 'Name',
             accessor: 'name',
             sortable: true
@@ -78,19 +47,44 @@ class Dashboard extends React.Component {
         }, {
             header: 'Evaluate',
             cell: (rowData) => {
-                this.transformData(rowData);
-                return <button className="btn btn-primary" onClick={this.showModal}>Evaluate</button>
+                return <Button label="Evaluate" onClickAction={this.toggleModal} customClasses="btn btn-primary" />
             }
         }];
+        this.toggleModal = this.toggleModal.bind(this);
+        this.formSubmitAction = this.formSubmitAction.bind(this);
+        this.onChange = this.onChange.bind(this);
+    }
+
+    toggleModal() {
+        this.setState({
+            showModal: !this.state.showModal
+        });
+    }
+
+    formSubmitAction(name) {
+        console.log('form submitted', name);
+    }
+
+    transformData(data) {
+        console.log(data);
+    }
+
+    onChange(type) {
+        this.setState({
+            evaluationType: type
+        });
+    }
+
+    render() {
         return (
             <div>
-                <Table columns={columns} data={data} ></Table>
+                <Table columns={this.colHeaders} data={this.data} ></Table>
                 <Modal show={this.state.showModal} >
-                    <ModalHeader toggle={this.closeModal}>
+                    <ModalHeader toggle={this.toggleModal}>
                         <h5 className="modal-title">Evaluation Form</h5>
                     </ModalHeader>
                     <ModalBody>
-                        <Form data={this.state.formData} onSubmitForm={this.formSubmitAction} onCancelForm={this.closeModal}></Form>
+                        <Form data={this.state.formData} onSubmitForm={this.formSubmitAction} onCancelForm={this.toggleModal}></Form>
                     </ModalBody>
                 </Modal>
             </div>

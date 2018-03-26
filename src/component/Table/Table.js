@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 class Table extends React.Component {
     constructor(props) {
@@ -8,6 +9,31 @@ class Table extends React.Component {
             sortedColumn: null
         };
         this.sort = this.sort.bind(this);
+    }
+
+    getTableHeader() {
+        const cursorStyle = {
+            cursor: 'pointer'
+        };
+        return this.props.columns.map((col, index) => {
+            return (<th scope="col" key={index}>
+                {col.header ? col.header : col.headerCell} {col.sortable ?
+                    <i style={cursorStyle} className={`fa ${this.state.sortedColumn === null ||
+                        (this.state.sortedColumn !== null && (this.state.sortedColumn.order === 0 || this.state.sortedColumn.header !== col.header)) ?
+                        'fa-sort' : (this.state.sortedColumn.order > 0 ? 'fa-sort-asc' : 'fa-sort-desc')}`} onClick={() => this.sort(col)} aria-hidden="true"></i> : null}</th>)
+        });
+    }
+
+    getTableRow() {
+        return this.state.data.map((dataObj, i) => {
+            return (<tr key={i} >{this.getTableCell(this.props.columns, dataObj)}</tr>)
+        });
+    }
+
+    getTableCell(columns, obj) {
+        return columns.map((bcell, I) => {
+            return (<td key={I}>{bcell.accessor ? obj[bcell.accessor] : bcell.cell(obj)}</td>);
+        });
     }
 
     sort(col) {
@@ -46,39 +72,51 @@ class Table extends React.Component {
     }
 
     render() {
-
-        const TableHeadComponent = this.props.columns.map((col, index) => {
-            return (<th scope="col" key={index}>
-                {col.header ? col.header : col.headerCell} {col.sortable ?
-                    <i className={`fa ${this.state.sortedColumn === null ||
-                        (this.state.sortedColumn !== null && (this.state.sortedColumn.order === 0 || this.state.sortedColumn.header !== col.header)) ?
-                        'fa-sort' : (this.state.sortedColumn.order > 0 ? 'fa-sort-asc' : 'fa-sort-desc')}`} onClick={() => this.sort(col)} aria-hidden="true"></i> : null}</th>)
-        });
-
-        const TableBodyColumn = (columns, obj) => {
-            return columns.map((bcell, I) => {
-                return (<td key={I}>{bcell.accessor ? obj[bcell.accessor] : bcell.cell(obj)}</td>);
-            });
-        }
-
-        const TableBodyComponent = this.state.data.map((dataObj, i) => {
-            return (<tr key={i} >{TableBodyColumn(this.props.columns, dataObj)}</tr>)
-        });
         return (
             <div>
                 <table className="table">
                     <thead>
                         <tr>
-                            {TableHeadComponent}
+                            {this.getTableHeader()}
                         </tr>
                     </thead>
                     <tbody>
-                        {TableBodyComponent}
+                        {this.getTableRow()}
                     </tbody>
                 </table>
             </div>
         )
     }
+}
+
+function checkColumn(props, propName, componentName) {
+    const requiredHeaderAttr = ['header', 'headerCell'];
+    const requiredCellAttr = ['accessor', 'cell'];
+
+    if (!(propName in props)) {
+        return new Error(`Prop ${propName} is not supplied`);
+    }
+
+    if (props[propName].length < 1) {
+        return new Error(`${propName} cannot be empty`);
+    }
+
+    return props[propName].every(propObj => {
+        return (requiredHeaderAttr.some(attr => {
+            return Object.keys(propObj).indexOf(attr) > -1;
+        }) && requiredCellAttr.some(attr => {
+            return Object.keys(propObj).indexOf(attr) > -1;
+        }));
+    }) ? null : new Error("Required attr missing: Either of header or headerCell or accessor or cell");
+}
+
+Table.propTypes = {
+    data: PropTypes.array.isRequired,
+    columns: checkColumn
+}
+
+Table.defaultProps = {
+    sortable: false
 }
 
 export default Table;

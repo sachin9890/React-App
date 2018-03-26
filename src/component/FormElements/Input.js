@@ -8,7 +8,7 @@ class Input extends Component {
             <input
                 type={this.props.type}
                 name={this.props.name}
-                className={this.props.classes}
+                className={this.props.customClasses}
                 id={this.props.id}
                 placeholder={this.props.placeholder}
                 disabled={this.props.disabled}
@@ -19,6 +19,10 @@ class Input extends Component {
 }
 
 Input.propTypes = {
+    customClasses: PropTypes.string,
+    placeholder: PropTypes.string,
+    disabled: PropTypes.bool,
+    required: PropTypes.bool,
     name: PropTypes.string.isRequired,
     type: PropTypes.string.isRequired,
     id: PropTypes.string.isRequired,
@@ -26,7 +30,7 @@ Input.propTypes = {
 }
 
 Input.defaultProps = {
-    classes: "form-control",
+    customClasses: "form-control",
     placeholder: "",
     disabled: false,
     required: false
