@@ -4,6 +4,7 @@
     "type": "text",
     "placeholder": "Enter name",
     "name": "name",
+    "value": "",
     "title": "Name",
     "isReadOnly": false,
     "required": true
@@ -14,7 +15,7 @@
     "name": "resume",
     "title": "Resume",
     "target": "_blank",
-    "address": "http://google.com",
+    "value": "",
     "linkTitle": "click here"
   },
   {
@@ -23,7 +24,7 @@
     "name": "evaluation",
     "title": "Evaluation sheet",
     "target": "_blank",
-    "address": "http://facebook.com",
+    "value": "",
     "linkTitle": "click here"
   },
   {
@@ -31,6 +32,7 @@
     "type": "text",
     "placeholder": "Enter HR",
     "name": "hr",
+    "value": "",
     "title": "HR",
     "required": true
   },
@@ -38,6 +40,7 @@
     "type": "number",
     "placeholder": "Enter Testscore",
     "name": "testscore",
+    "value": "",
     "title": "Testscore",
     "id": "testscoreId",
     "required": true
@@ -48,13 +51,19 @@
     "title": "Evaluate",
     "name": "evaluate",
     "required": true,
+    "value": "",
     "options": [
       {
-        "label": "Selected"
+        "label": "Please Select",
+        "selected": true
+      },
+      {
+        "label": "Selected",
+        "selected": false
       },
       {
         "label": "Rejected",
-        "selected": true
+        "selected": false
       }
     ]
   },
@@ -64,7 +73,11 @@
     "title": "Seniority",
     "name": "seniority",
     "required": true,
+    "value": "",
     "options": [
+      {
+        "label": "Please Select"
+      },
       {
         "label": "Jr"
       },
@@ -84,12 +97,7 @@
     "type": "textarea",
     "placeholder": "Write something here...",
     "name": "feedback",
+    "value": "",
     "title": "Feedback"
-  },
-  {
-    "type": "submit",
-    "placeholder": "enter name",
-    "name": "firstName",
-    "title": "submit"
   }
 ]

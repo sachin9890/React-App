@@ -1,18 +1,25 @@
 import React, { Component } from 'react';
 import { Label, Input, TextArea, Select } from '../FormElements';
 import Button from '../Button';
+import FormError from '../Error';
 
 class Form extends Component {
-    constructor() {
-        super();
-        this.state = {};
+    constructor(props) {
+        super(props);
+        this.state = {
+            data: this.props.data,
+            showErr: false
+        };
     }
 
     onChange(e) {
-        var state = {};
-        var targetName = e.target.name;
-        state[targetName] = e.target.value;
-        this.setState(state);
+        let data = JSON.parse(JSON.stringify(this.state.data));
+        data.forEach(d => {
+            if (e.target.name === d.name) {
+                d.value = e.target.value;
+            }
+        });
+        this.setState({ data });
     }
 
     textBox(ele, i) {
@@ -27,7 +34,9 @@ class Form extends Component {
                         placeholder={ele.placeholder}
                         disabled={ele.isReadOnly}
                         required={ele.required}
+                        value={ele.value}
                         onChange={this.onChange.bind(this)} />
+                    <FormError message="Please enter the required field" show={this.state.showErr && !ele.value} />
                 </div>
             </div>
         )
@@ -46,6 +55,7 @@ class Form extends Component {
                         disabled={ele.isReadOnly}
                         onChange={this.onChange.bind(this)}>
                     </TextArea>
+                    <FormError message="Please enter the required field" show={this.state.showErr && !ele.value} />
                 </div>
             </div>
         )
@@ -88,17 +98,31 @@ class Form extends Component {
                         required={ele.required}
                         onChange={this.onChange.bind(this)} options={ele.options}>
                     </Select>
+                    <FormError message="Please enter the required field" show={this.state.showErr && !ele.value} />
                 </div>
             </div>
         )
+    }
+
+    onClickAction() {
+        if (this.isFormEmpty()) {
+            this.setState({ showErr: true });
+        } else {
+            this.setState({ show: false });
+            this.props.onSubmitForm(this.state.data);
+        }
+    }
+
+    isFormEmpty() {
+        return this.state.data.some(d => !d.value);
     }
 
     submitBtn() {
         return (
             <div className="form-group row">
                 <div className="col-md-12">
-                    <Button label="Cancel" onClickAction={this.props.onCancelForm} customClasses="btn btn-secondary float-left"/>
-                    <Button label="Submit" onClickAction={() => this.props.onSubmitForm(this.state)} customClasses="btn btn-primary float-right"/>
+                    <Button label="Cancel" onClickAction={this.props.onCancelForm} customClasses="btn btn-secondary float-left" />
+                    <Button label="Submit" onClickAction={this.onClickAction.bind(this)} customClasses="btn btn-primary float-right" />
                 </div>
             </div>
         )
@@ -109,7 +133,7 @@ class Form extends Component {
             <div key={i} className="form-group row">
                 {this.addLabel(ele)}
                 <div className="col-sm-10" style={{ paddingTop: '7px' }}>
-                    <a href={ele.address} target={ele.target}>{ele.linkTitle}</a>
+                    <a href={ele.value} target={ele.target}>{ele.linkTitle}</a>
                 </div>
             </div>
         )
@@ -152,10 +176,10 @@ class Form extends Component {
 
     render() {
         return (
-            <form
+            <form name={this.props.name}
                 className="container"
-                onSubmit={(e) => e.preventDefault()}>
-                {this.generateElement(this.props.data)}
+                onSubmit={(e) => e.preventDefault()} noValidate>
+                {this.generateElement(this.state.data)}
                 {this.submitBtn()}
             </form>
         )

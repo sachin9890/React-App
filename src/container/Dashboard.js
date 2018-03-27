@@ -32,12 +32,12 @@ class Dashboard extends React.Component {
         }, {
             header: 'CV Link',
             cell: (rowData) => {
-                return <a href={rowData.cvLink} target="_blank">{`CV_${rowData.name}`}</a>
+                return <a href={rowData.resume} target="_blank">{`CV_${rowData.name}`}</a>
             }
         }, {
             header: 'Evaluation Link',
             cell: (rowData) => {
-                return <a href={rowData.evLink} target="_blank">{`EV_${rowData.name}`}</a>
+                return <a href={rowData.evaluation} target="_blank">{`EV_${rowData.name}`}</a>
             }
         }, {
             header: 'L1 Result',
@@ -47,7 +47,7 @@ class Dashboard extends React.Component {
         }, {
             header: 'Evaluate',
             cell: (rowData) => {
-                return <Button label="Evaluate" onClickAction={this.toggleModal} customClasses="btn btn-primary" />
+                return <Button label="Evaluate" onClickAction={() => {this.toggleModal(); this.transformData(rowData)}} customClasses="btn btn-primary" />
             }
         }];
         this.toggleModal = this.toggleModal.bind(this);
@@ -61,12 +61,20 @@ class Dashboard extends React.Component {
         });
     }
 
-    formSubmitAction(name) {
-        console.log('form submitted', name);
+    formSubmitAction(data) {
+        this.toggleModal();
+        console.log('form submitted', data);
     }
 
     transformData(data) {
-        console.log(data);
+        formData.forEach(formField => {
+            for(let userAttr in data) {
+                if(userAttr === formField.name) {
+                    formField.value = data[userAttr];
+                }
+            }
+        }, this);
+        this.setState({ formData: formData });
     }
 
     onChange(type) {
@@ -84,7 +92,7 @@ class Dashboard extends React.Component {
                         <h5 className="modal-title">Evaluation Form</h5>
                     </ModalHeader>
                     <ModalBody>
-                        <Form data={this.state.formData} onSubmitForm={this.formSubmitAction} onCancelForm={this.toggleModal}></Form>
+                        <Form name="evaluationForm" data={this.state.formData} onSubmitForm={this.formSubmitAction} onCancelForm={this.toggleModal}></Form>
                     </ModalBody>
                 </Modal>
             </div>
